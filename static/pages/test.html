@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head> </head>
+<body>
+  <!--import dependence-->
+  <script src="/js/socket.io.min.js"></script>
+  <script src="/js/api.js"></script>
+  <h4>Test!</h4>
+  <script>
+    /// <reference path="api.js"></reference>
+    // HC.init().then(()=>HC.user.login("name","password").then())
+    [
+      HC.init(),
+      HC.user.login("name", "password"),
+      new Promise(function (resolve, reject) {
+        HC.msg.listenroom("room1");
+      })
+    ].reduce((p, f) => p.then(f), Promise.resolve());
+    // HC.msg.extendmsg(5)
+  </script>
+</body>

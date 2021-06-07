@@ -3,8 +3,8 @@ var MongoClient = require("mongodb").MongoClient;
 var sconfig = require("./sconfig.json");
 var readline = require("readline");
 var fs = require("fs");
-const winston = require('winston');
-const PORT = 3000;
+const winston = require("winston");
+const PORT = 8080;
 
 var app = express();
 app.use(express.static("static"));
@@ -55,7 +55,7 @@ class hashtable {
     else
       return (this.container[hash].find((x) => x[0] == ele) || [
         undefined,
-        undefined,
+        undefined
       ])[1];
   }
   /**
@@ -113,12 +113,12 @@ io.on("connection", (socket) => {
   socket.on("login", (name, password) => {
     if (!name && !password) return 0;
     sql.auth.find(name).then(function (user) {
-      if (user.encoded_password == sql.auth.encode(password)) {
+      if (!!user&&user.encoded_password == sql.auth.encode(password)) {
         //registered user (included guest)
         socketRecord.push([] + socket.id, user);
         io.to(socket.id).emit("statusb", {
           right: user.right,
-          name: user.name,
+          name: user.name
         });
       }
       //not registered
@@ -144,7 +144,7 @@ io.on("connection", (socket) => {
       socketRecord.push([] + socket.id, socketRecord.find(rid));
       io.to(socket.id).emit("statusb", {
         right: cur_data.right,
-        name: cur_data.name,
+        name: cur_data.name
       });
     } else io.to(socket.id).emit("statusb", { right: -1 });
   });
@@ -167,7 +167,7 @@ io.on("connection", (socket) => {
     io.to(socket.id).emit("getrid", { rid: rid, time: time });
     socketRecord.push(rid, {
       ...{ timestamp: time },
-      ...socketRecord.find([] + socket.id),
+      ...socketRecord.find([] + socket.id)
     });
     socketRecord.delete(socket.id);
     io.to(socket.id).emit("statusb", { right: -1 });
@@ -206,7 +206,7 @@ io.on("connection", (socket) => {
       //add record to both
       roomSendList[room].push(socket.id);
       roomRecord.push([] + socket.id, {
-        room: room,
+        room: room
       });
     }
   });
@@ -234,10 +234,10 @@ var client;
 class sql {
   static client;
   static init() {
-    const uri = sconfig.init.mongodb.uri;
+    const uri = sconfig.init.mongodb.uri || process.env.dbpath;
     client = new MongoClient(uri, {
       useNewUrlParser: true,
-      useUnifiedTopology: true,
+      useUnifiedTopology: true
     });
     var promise_queue = [];
     return new Promise(function (resolve, reject) {
@@ -256,7 +256,7 @@ class sql {
       var user_content = {
         name: name,
         encoded_password: this.encode(password),
-        right: right,
+        right: right
       };
       return new Promise(function (resolve, reject) {
         const collection = client.db("chat2").collection("auth");
@@ -278,7 +278,7 @@ class sql {
           resolve(back[0]);
         });
       });
-    },
+    }
   };
   //for msg management system(room var included)
   static msg = {
@@ -300,7 +300,7 @@ class sql {
         time: Date.now(),
         user: name,
         msg: content,
-        type: "msg",
+        type: "msg"
       };
       this.tmp.msg[room].var_.next_id++;
       // socket here
@@ -340,7 +340,7 @@ class sql {
         coll.insertOne(
           {
             ...{ type: "var" },
-            ...sql.msg.tmp.msg[room].var_,
+            ...sql.msg.tmp.msg[room].var_
           },
           function (err, result) {
             var ok = result.result.ok;
@@ -367,7 +367,7 @@ class sql {
             resolve();
           });
       });
-    },
+    }
   };
 }
 
@@ -377,7 +377,7 @@ sql.init().then(function () {
 });
 const terminal = readline.createInterface({
   input: process.stdin,
-  output: process.stdout,
+  output: process.stdout
 });
 terminal.on("line", (line) => {
   switch (line.trim()) {
@@ -397,16 +397,18 @@ terminal.on("line", (line) => {
 // sql.init().then(() => sql.msg.send("name","test val","room1"));
 
 const logger = winston.createLogger({
-  level: 'info',
+  level: "info",
   format: winston.format.json(),
   // defaultMeta: { service: 'user-service' },
   transports: [
-    new winston.transports.File({ filename: 'node.error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'node.info.error.log' }),
-  ],
+    new winston.transports.File({ filename: "node.error.log", level: "error" }),
+    new winston.transports.File({ filename: "node.info.error.log" })
+  ]
 });
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.simple(),
-  }));
+if (process.env.NODE_ENV !== "production") {
+  logger.add(
+    new winston.transports.Console({
+      format: winston.format.simple()
+    })
+  );
 }
