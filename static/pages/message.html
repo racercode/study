@@ -44,7 +44,7 @@
   <script defer>
     HC.init().then(function () {
       if (HC.user.IsloggedIn == false) {
-        //window.location.href = "/pages/index.html";
+        window.location.href = "/pages/index.html";
         
       }
     });
@@ -55,7 +55,8 @@
       },
       submit: function () {
         var a = document.getElementById("msg").innerHTML;
-        HC.msg.submit(a).then(function () {
+        HC.msg.submit(a).then(function (x) {
+          if(x)
           document.getElementById("msg").value = "";
           document.getElementById("msgblock").style.display = "none";
           document.getElementById("top").style.display = "block";

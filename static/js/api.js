@@ -128,7 +128,10 @@ class HC {
      * @returns {Promise<boolean>} always return false
      */
     submit: function (msg, room = "room1") {
-      HC.socket.emit("sendMessage", msg, room);
+      return new Promise(function (resolve, reject){
+        HC.socket.emit("sendMessage", msg, room);
+        resolve(true);
+      })
     },
     /**
      *

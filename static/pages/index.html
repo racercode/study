@@ -45,17 +45,6 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
-  <!-- <form>
-    <h3>帳號 : <input type="text" name="account" id="account" /></h3>
-    <h3>密碼 : <input type="text" name="password" id="password" /></h3>
-    <button
-      onclick="scope.login();"
-      style="outline: none;"
-      class="login-button"
-    >
-      登入
-    </button>
-  </form> -->
   <script defer>
     HC.init().then(() => {
       console.log("inited");
@@ -74,22 +63,5 @@
       });
       return false;
     }
-
-    // var scope = {
-    //   login: function () {
-    //     var accountName = document.getElementById("account").value;
-    //     var password = document.getElementById("password").value;
-    //     HC.user
-    //       .Login(accountName, password)
-    //       .then(function () {
-    //         window.location.href = "message.html";
-    //       })
-    //       .catch(function () {
-    //         document.getElementById("account").value = "";
-    //         document.getElementById("password").value = "";
-    //         alert("帳號或密碼錯誤");
-    //       });
-    //   }
-    // };
   </script>
 </body>
