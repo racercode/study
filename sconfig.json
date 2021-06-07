@@ -1,8 +1,0 @@
-{
-  "init": {
-    "mongodb": {
-      "uri": "mongodb+srv://HC_user:XoGeXS0hMrj5K9y7@cluster0.meejr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-    }
-  },
-  "unstable": { "roomlist": ["room1"] }
-}
