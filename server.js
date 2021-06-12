@@ -7,6 +7,10 @@ const winston = require("winston");
 const PORT = 8080;
 
 var app = express();
+app.get("/:page", function (req, res) {
+  const path = __dirname + "/static/pages/" + req.params.page;
+  if (fs.existsSync(path)) res.sendFile(path);
+});
 app.use(express.static("static"));
 var server = require("http").createServer(app);
 var io = require("socket.io")(server);
@@ -28,6 +32,7 @@ class hashtable {
    * @param {any} pair
    */
   push(ele, pair) {
+
     var temp = ele;
     if (typeof ele == "number") temp = ele.toString();
     if (ele instanceof Object) temp = JSON.stringify(ele);
@@ -35,8 +40,9 @@ class hashtable {
       Array.from(temp)
         .map((x) => x.charCodeAt(0))
         .reduce((a, b) => a + b) % this.bucketsLength;
-    if (this.container[hash]) this.container[hash].push([ele, pair]);
-    else this.container[hash] = [[ele, pair]];
+    var temp2=[ele, pair]
+    if (this.container[hash]) this.container[hash].push(temp2);
+    else this.container[hash] = [temp2];
   }
   /**
    * @description find ele
@@ -55,7 +61,7 @@ class hashtable {
     else
       return (this.container[hash].find((x) => x[0] == ele) || [
         undefined,
-        undefined
+        undefined,
       ])[1];
   }
   /**
@@ -113,12 +119,12 @@ io.on("connection", (socket) => {
   socket.on("login", (name, password) => {
     if (!name && !password) return 0;
     sql.auth.find(name).then(function (user) {
-      if (!!user&&user.encoded_password == sql.auth.encode(password)) {
+      if (!!user && user.encoded_password == sql.auth.encode(password)) {
         //registered user (included guest)
         socketRecord.push([] + socket.id, user);
         io.to(socket.id).emit("statusb", {
           right: user.right,
-          name: user.name
+          name: user.name,
         });
       }
       //not registered
@@ -144,7 +150,7 @@ io.on("connection", (socket) => {
       socketRecord.push([] + socket.id, socketRecord.find(rid));
       io.to(socket.id).emit("statusb", {
         right: cur_data.right,
-        name: cur_data.name
+        name: cur_data.name,
       });
     } else io.to(socket.id).emit("statusb", { right: -1 });
   });
@@ -164,6 +170,7 @@ io.on("connection", (socket) => {
     }
     var rid = randomstring(100);
     var time = Date.now() + 60 * 1000;
+    console.log(socketRecord.find([] + socket.id));
     io.to(socket.id).emit("getrid", { rid: rid, time: time });
     socketRecord.push(rid, {
       ...{ timestamp: time },
@@ -192,7 +199,7 @@ io.on("connection", (socket) => {
 
   socket.on("listenroom", (room) => {
     var user = socketRecord.find([] + socket.id);
-    if (user ? user.right : -1 >= 0) {
+    if (user && user.right >= 0) {
       //find room info
       var roomInfo = roomRecord.find([] + socket.id) || { room: "room1" };
       //delete old one of both
@@ -206,9 +213,10 @@ io.on("connection", (socket) => {
       //add record to both
       roomSendList[room].push(socket.id);
       roomRecord.push([] + socket.id, {
-        room: room
+        room: room,
       });
     }
+    io.to(socket.id).emit("roomrecive", { id: room });
   });
 
   socket.on("extendmsg", (top, amo) => {
@@ -237,7 +245,7 @@ class sql {
     const uri = sconfig.init.mongodb.uri || process.env.dbpath;
     client = new MongoClient(uri, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     });
     var promise_queue = [];
     return new Promise(function (resolve, reject) {
@@ -256,7 +264,7 @@ class sql {
       var user_content = {
         name: name,
         encoded_password: this.encode(password),
-        right: right
+        right: right,
       };
       return new Promise(function (resolve, reject) {
         const collection = client.db("chat2").collection("auth");
@@ -278,7 +286,7 @@ class sql {
           resolve(back[0]);
         });
       });
-    }
+    },
   };
   //for msg management system(room var included)
   static msg = {
@@ -300,7 +308,7 @@ class sql {
         time: Date.now(),
         user: name,
         msg: content,
-        type: "msg"
+        type: "msg",
       };
       this.tmp.msg[room].var_.next_id++;
       // socket here
@@ -340,10 +348,10 @@ class sql {
         coll.insertOne(
           {
             ...{ type: "var" },
-            ...sql.msg.tmp.msg[room].var_
+            ...sql.msg.tmp.msg[room].var_,
           },
           function (err, result) {
-            var ok = result.result.ok;
+            var ok = result.ok;
             if (ok == 1) resolve();
             else reject();
           }
@@ -367,7 +375,7 @@ class sql {
             resolve();
           });
       });
-    }
+    },
   };
 }
 
@@ -377,7 +385,7 @@ sql.init().then(function () {
 });
 const terminal = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 terminal.on("line", (line) => {
   switch (line.trim()) {
@@ -402,13 +410,13 @@ const logger = winston.createLogger({
   // defaultMeta: { service: 'user-service' },
   transports: [
     new winston.transports.File({ filename: "node.error.log", level: "error" }),
-    new winston.transports.File({ filename: "node.info.error.log" })
-  ]
+    new winston.transports.File({ filename: "node.info.error.log" }),
+  ],
 });
 if (process.env.NODE_ENV !== "production") {
   logger.add(
     new winston.transports.Console({
-      format: winston.format.simple()
+      format: winston.format.simple(),
     })
   );
 }

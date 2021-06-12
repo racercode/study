@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>...</title>
+    <script src="/js/socket.io.min.js"></script>
+    <script src="/js/api.js"></script>
+    <link href="/css/msg.css" rel="stylesheet" />
+  </head>
+  <body>
+    <script src="/js/msg.js"></script>
+    <nav>
+      <ul>
+        <li><a>Home</a></li>
+        <li><a>help</a></li>
+        <li><a href="javascript:HC.user.logout().then(()=>alert('logout'))">logout</a></li>
+      </ul>
+    </nav>
+    <button type="button" class="fnone cm" onclick="extendMsg()">Load More</button>
+    <div id="content" class="fnone cm"></div>
+
+    <form onsubmit="return _submit();" id="center" class="fnone cm">
+      <div>
+        <label>Msg:</label> <input type="text" id="Msg" />
+      </div>
+      <div><button type="submit">Submit</button></div>
+    </form>
+
+    <form onsubmit="return ChangeRoom()" id="center" class="cr">
+      <div>
+        <label>Room:</label> <input type="text" id="room" />
+      </div>
+      <div><button type="submit">Submit</button></div>
+    </form>
+  </body>
+</html>

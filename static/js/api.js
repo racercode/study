@@ -12,7 +12,7 @@ class HC {
       HC.username = e.name || undefined;
     });
     this.socket.on("onmsg", function (data) {
-      HC.msg.addMsgRecord( data,HC.msg.roomId);
+      HC.msg.addMsgRecord(data, HC.msg.roomId);
       var obj = document.documentElement;
       var event = new CustomEvent("onmsg", data);
       obj.dispatchEvent(event);
@@ -82,7 +82,7 @@ class HC {
     logout: function () {
       return new Promise(function (resolve, reject) {
         HC.socket.emit("logout");
-        this.socket.on("statusb", function (e) {
+        HC.socket.on("statusb", function (e) {
           if (e.userright == -1) resolve();
           else reject();
         });
@@ -92,12 +92,13 @@ class HC {
      * @description store connection status in ls
      */
     storeConnection: function () {
+      console.log("!s")
       return new Promise(function (resolve, reject) {
         if (HC.user.IsloggedIn) HC.socket.emit("storeConnection");
         HC.socket.on("getrid", function (e) {
           localStorage.setItem(HC.lsid, JSON.stringify(e));
+          resolve();
         });
-        HC.socket.on("statusb", resolve);
       });
     },
   };
@@ -125,22 +126,31 @@ class HC {
      * @param {*} msg
      * @param {string} - room id
      * @async
-     * @returns {Promise<boolean>} always return false
+     * @returns {Promise<boolean>} resolve false if failed
      */
-    submit: function (msg, room = "room1") {
-      return new Promise(function (resolve, reject){
+    submit: function (msg, room = HC.msg.room) {
+      console.log(room)
+      if (!room) return Promise.resolve(false);
+      return new Promise(function (resolve, reject) {
         HC.socket.emit("sendMessage", msg, room);
         resolve(true);
-      })
+      });
     },
     /**
      *
      * @param {string} room id
+     * @returns {Promise<string>} resolve with room id
      */
     listenroom: function (room) {
-      if (!this.msgRecord[room]) this.msgRecord[room] = [];
-      this.room = room;
-      HC.socket.emit("listenroom", room);
+      return new Promise(function (resolve, reject) {
+        if (!HC.msg.msgRecord[room]) HC.msg.msgRecord[room] = [];
+        HC.msg.room = room;
+        HC.socket.on("roomrecive", (x) => {
+          console.log("room recived: " + JSON.stringify(x));
+          resolve(x);
+        });
+        HC.socket.emit("listenroom", room);
+      });
     },
     /**
      * @description roomId
@@ -153,7 +163,7 @@ class HC {
       if (!this.room) console.warn("room not selected!");
       return this.msgRecord[this.room];
     },
-    addMsgRecord: function (msg,room=this.roomId) {
+    addMsgRecord: function (msg, room = this.roomId) {
       this.msgRecord[room].push(msg);
       this.msgRecord[room] = this.msgRecord[room].sort(
         (x, y) => +x.msgId - +y.msgId
@@ -162,7 +172,7 @@ class HC {
     /**
      *
      * @param {number} amo - amount of msg to extend
-     * @returns
+     * @returns {Promise<Array>}
      */
     extendmsg: function (amo) {
       return new Promise((resolvet, rejectt) => {
@@ -174,16 +184,15 @@ class HC {
         for (var i = 0; i < temp1.length; i++)
           min = Math.min(temp1[i].msgId, min);
         if (min == 999999999) min = -1;
-        console.log((min));
+        console.log(min);
         HC.socket.emit("extendmsg", min, amo);
         new Promise(function (resolve, reject) {
           HC.socket.on("extendmsgb", resolve);
         }).then(function (x) {
-          console.log(x)
           x.forEach((x) => {
             HC.msg.addMsgRecord(x);
           });
-          resolvet(x);
+          resolvet(x.sort((x, y) => +x.msgId - +y.msgId));
         });
       });
     },

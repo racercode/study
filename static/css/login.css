@@ -1,0 +1,46 @@
+nav ul {
+  list-style-type: none;
+  display: inline;
+  border-radius: 5px;
+}
+nav li {
+  margin-left: 10px;
+  float: left;
+  display: inline;
+  background-color: white;
+  border-radius: 5px;
+}
+nav li:hover {
+  filter: invert(1);
+}
+nav {
+  position: sticky;
+  top:0;
+  border: 2px black solid;
+  border-radius: 5px;
+  background-color: white;
+}
+form#center > div {
+  margin-top: 7px;
+}
+body {
+  margin: 10px;
+  font-size: large;
+}
+/* 400 550 1100 */
+@media only screen and (max-device-width: 400px) {
+  form label::after {
+    content: "\a";
+    white-space: pre;
+  }
+}
+@media only screen and (max-device-width: 500px) {
+  body {
+    font-size: x-large;
+  }
+}
+@media only screen and (max-device-width: 1100px) {
+  body {
+    font-size: xx-large;
+  }
+}

@@ -7,7 +7,6 @@ class HC {
   static init() {
     this.socket = io();
     this.socket.on("statusb", function (e) {
-      // console.log(e);
       HC.userright = e.right;
       HC.username = e.name || undefined;
     });
@@ -82,7 +81,8 @@ class HC {
     logout: function () {
       return new Promise(function (resolve, reject) {
         HC.socket.emit("logout");
-        this.socket.on("statusb", function (e) {
+        localStorage.removeItem(HC.lsid);
+        HC.socket.on("statusb", function (e) {
           if (e.userright == -1) resolve();
           else reject();
         });
@@ -171,12 +171,10 @@ class HC {
         for (var i = 0; i < temp1.length; i++)
           min = Math.min(temp1[i].msgId, min);
         if (min == 999999999) min = -1;
-        console.log((min));
         HC.socket.emit("extendmsg", min, amo);
         new Promise(function (resolve, reject) {
           HC.socket.on("extendmsgb", resolve);
         }).then(function (x) {
-          console.log(x)
           x.forEach((x) => {
             HC.msg.addMsgRecord(x);
           });
