@@ -92,7 +92,6 @@ class HC {
      * @description store connection status in ls
      */
     storeConnection: function () {
-      console.log("!s")
       return new Promise(function (resolve, reject) {
         if (HC.user.IsloggedIn) HC.socket.emit("storeConnection");
         HC.socket.on("getrid", function (e) {
@@ -129,7 +128,6 @@ class HC {
      * @returns {Promise<boolean>} resolve false if failed
      */
     submit: function (msg, room = HC.msg.room) {
-      console.log(room)
       if (!room) return Promise.resolve(false);
       return new Promise(function (resolve, reject) {
         HC.socket.emit("sendMessage", msg, room);
@@ -184,7 +182,6 @@ class HC {
         for (var i = 0; i < temp1.length; i++)
           min = Math.min(temp1[i].msgId, min);
         if (min == 999999999) min = -1;
-        console.log(min);
         HC.socket.emit("extendmsg", min, amo);
         new Promise(function (resolve, reject) {
           HC.socket.on("extendmsgb", resolve);
