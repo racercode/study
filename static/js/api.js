@@ -7,7 +7,6 @@ class HC {
   static init() {
     this.socket = io();
     this.socket.on("statusb", function (e) {
-      // console.log(e);
       HC.userright = e.right;
       HC.username = e.name || undefined;
     });
@@ -81,9 +80,9 @@ class HC {
      */
     logout: function () {
       return new Promise(function (resolve, reject) {
-        HC.socket.emit("logout");
+        localStorage.removeItem(HC.lsid)
         HC.socket.on("statusb", function (e) {
-          if (e.userright == -1) resolve();
+          if (e.right == -1) resolve();
           else reject();
         });
       });
