@@ -11,12 +11,13 @@ nav li {
   border-radius: 5px;
 }
 nav li:hover {
-  filter: invert(1);
+  background: rgb(103, 218, 218);
+  color: white;
 }
 nav {
   position: sticky;
   top: 0;
-  border: 2px black solid;
+  border: none;
   border-radius: 5px;
   background-color: white;
 }
@@ -27,7 +28,34 @@ body {
   margin: 10px;
   font-size: large;
 }
+a{
+  text-decoration: none;
+  color: inherit; 
+}
 /* 400 550 1100 */
+.fnone {
+  display: none;
+}
+button {
+  width: 100px;
+  height: 30px;
+  color: white;
+  outline: none;
+  border: none;
+  background-color: rgb(38, 144, 214);
+}
+button:hover {
+  background-color: rgb(103, 218, 218);
+}
+div.side {
+  position: fixed;
+  width: 70vw;
+  height: 100vh;
+  background-color: gray;
+  z-index: 100;
+  top: 0;
+  left: 0;
+}
 @media only screen and (max-device-width: 400px) {
   form label::after {
     content: "\a";
@@ -43,7 +71,4 @@ body {
   body {
     font-size: xx-large;
   }
-}
-.fnone{
-    display: none;
 }

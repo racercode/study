@@ -39,3 +39,21 @@ function extendMsg() {
     .extendmsg(5)
     .then((x) => x.reverse().forEach((x) => addToPanel(x.user, x.msg, x.time)));
 }
+
+var sideT = {
+  open: function (ele=document.querySelector(".side")) {
+    ele.classList.remove("fnone");
+    ele.setAttribute("data-side-open", "true");
+  },
+  close: function (ele=document.querySelector(".side")) {
+    ele.classList.add("fnone");
+    ele.setAttribute("data-side-open", "false");
+  },
+  mode: function (ele=document.querySelector(".side")) {
+    return ele.getAttribute("data-side-open") == "true";
+  },
+  switch: function (ele=document.querySelector(".side")) {
+    if (this.mode(ele)) this.close(ele);
+    else this.open(ele);
+  },
+};

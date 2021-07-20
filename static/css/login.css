@@ -11,12 +11,13 @@ nav li {
   border-radius: 5px;
 }
 nav li:hover {
-  filter: invert(1);
+  background:rgb(103, 218, 218);
+  color:white;
 }
 nav {
   position: sticky;
   top:0;
-  border: 2px black solid;
+  border: 2px white;
   border-radius: 5px;
   background-color: white;
 }
@@ -27,12 +28,36 @@ body {
   margin: 10px;
   font-size: large;
 }
+.fnone{
+  display: none;
+}
 /* 400 550 1100 */
+button{
+  width: 100px;
+  height: 30px;
+  color:white;
+  outline: none;
+  border: none;
+  background-color: rgb(38, 144, 214);
+}
+button:hover{
+  background-color: rgb(103, 218, 218);
+}
+input{
+  border: 2px;
+  border-radius: 3px;
+  border-color: black;
+  background-color: rgb(190, 181, 181);
+}
 @media only screen and (max-device-width: 400px) {
   form label::after {
     content: "\a";
     white-space: pre;
   }
+}
+a{
+  text-decoration: none;
+  color: inherit; 
 }
 @media only screen and (max-device-width: 500px) {
   body {

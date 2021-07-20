@@ -6,12 +6,16 @@ var fs = require("fs");
 const winston = require("winston");
 const PORT = 8080;
 
+const roomlist=["room1"];
 var app = express();
 app.get("/:page", function (req, res) {
   const path = __dirname + "/static/pages/" + req.params.page;
   if (fs.existsSync(path)) res.sendFile(path);
 });
 app.use(express.static("static"));
+app.get("/", function (req, res) {
+res.send('This is a plain text response. If you see this, try use a right uri')
+});
 var server = require("http").createServer(app);
 var io = require("socket.io")(server);
 app.start = app.listen = function () {
@@ -170,7 +174,6 @@ io.on("connection", (socket) => {
     }
     var rid = randomstring(100);
     var time = Date.now() + 60 * 1000;
-    console.log(socketRecord.find([] + socket.id));
     io.to(socket.id).emit("getrid", { rid: rid, time: time });
     socketRecord.push(rid, {
       ...{ timestamp: time },
@@ -198,6 +201,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("listenroom", (room) => {
+    if(!roomlist.includes(room))return 0;
     var user = socketRecord.find([] + socket.id);
     if (user && user.right >= 0) {
       //find room info
