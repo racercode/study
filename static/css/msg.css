@@ -1,4 +1,4 @@
-nav ul {
+/*nav ul {
   list-style-type: none;
   display: inline;
   border-radius: 5px;
@@ -32,7 +32,7 @@ a{
   text-decoration: none;
   color: inherit; 
 }
-/* 400 550 1100 */
+400 550 1100
 .fnone {
   display: none;
 }
