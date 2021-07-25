@@ -32,20 +32,8 @@ a{
   text-decoration: none;
   color: inherit; 
 }
-/* 400 550 1100 */
 .fnone {
   display: none;
-}
-button {
-  width: 100px;
-  height: 30px;
-  color: white;
-  outline: none;
-  border: none;
-  background-color: rgb(38, 144, 214);
-}
-button:hover {
-  background-color: rgb(103, 218, 218);
 }
 div.side {
   position: fixed;

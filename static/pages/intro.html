@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>留言板</title>
+        <script src="/js/api.js"></script>
+        <script src="/js/intro.js"></script>
+        <script src="/js/socket.io.min.js"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    </head>
+    <body background="/image/back.jfif">
+        <div id="dis-big">
+            <ul class="my-10 mx-32 border-b-2 rounded-3xl flex bg-green-100">
+                <li class="flex-1 float-left my-3 mx-5 "><a class="hover:bg-green-300 px-2 py-1 rounded-xl" href="index.html">歡迎到留言板</a></li>
+                <li class="float-right my-3 mx-5 "><a href="login.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">帳號</a></li>
+                <li class="float-right my-3 mx-5 "><a href="intro.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">網站介紹</a></li>
+                <li class="float-right my-3 mx-5 " id="log1"><a href="javascript:logout()" class="hover:bg-green-300 px-2 py-1 rounded-xl">登出</a></li>
+            </ul>
+        </div>
+        <div id="dis-small" class="my-10 mx-10 border-b-2 rounded-md bg-green-100">
+            <div class="flex">
+                <div class="flex-1 my-2 mx-2 float-left px-2 py-1"><a class="hover:bg-green-300 rounded-xl px-2 py-1" href="index.html">歡迎到留言板</a></div>
+                <button onclick="turnon()" class="float-right my-2 mr-2 px-2 py-1 hover:bg-green-300 rounded-xl"><i class='far fa-caret-square-down' style='font-size:24px'></i></button>
+            </div>
+            <div id="navbar">
+                <ul>
+                    <li class="mb-2 mx-3 px-1"><a href="login.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">帳號</a></li>
+                    <li class="my-2 mx-3 px-1"><a href="intro.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">網站介紹</a></li>
+                    <li class="my-2 mx-3 px-1" id="log2"><a href="javascript:logout()" class="hover:bg-green-300 px-2 py-1 rounded-xl">登出</a></li>
+                </ul>
+            </div>
+        </div>
+        <center><div class="mx-10 my-10 bg-green-200 p-4 rounded-3xl">
+            <p class="text-xl p-2">這裡是我們兩個人共同完成的自主學習成果<br>
+            由<a href="https://github.com/Eason0729" class="m-2 hover:bg-green-400 underline">邱繼叡</a>完成後端<br>
+            由<a href="https://github.com/racercode" class="m-2 hover:bg-green-400 underline">楊翔宇</a>完成前端<br>
+            <br>1. 登入</p>
+            <img src="/image/p2.jpeg" alt="登入" class="rounded-3xl w-10/12"> 
+            <p class="text-xl p-2">2. 輸入房間號碼</p>
+            <img src="/image/p1.jpeg" alt="輸入房間號碼" class="rounded-3xl w-10/12"> 
+            <p class="text-xl p-2">3. 輸入訊息</p>
+            <img src="/image/p4.jpeg" alt="輸入訊息" class="rounded-3xl w-10/12"> 
+            <p class="text-xl p-2">就可在留言版看到自己留言內容</p>
+            <img src="/image/p5.jpeg" alt="可在留言版看到自己留言內容" class="rounded-3xl w-10/12"> 
+        </div></center>
+    </body>
+</html>

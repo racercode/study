@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>留言板</title>
+        <script src="/js/api.js"></script>
+        <script src="/js/index.js"></script>
+        <script src="/js/socket.io.min.js"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    </head>
+    <body background="/image/back.jfif">
+        <div id="dis-big">
+            <ul class="my-10 mx-32 border-b-2 rounded-3xl flex bg-green-100">
+                <li class="flex-1 float-left my-3 mx-5 "><a class="hover:bg-green-300 px-2 py-1 rounded-xl" href="index.html">歡迎到留言板</a></li>
+                <li class="float-right my-3 mx-5 "><a href="login.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">帳號</a></li>
+                <li class="float-right my-3 mx-5 "><a href="intro.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">網站介紹</a></li>
+                <li class="float-right my-3 mx-5 " id="log1"><a href="javascript:logout()" class="hover:bg-green-300 px-2 py-1 rounded-xl">登出</a></li>
+            </ul>
+        </div>
+        <div id="dis-small" class="my-10 mx-10 border-b-2 rounded-md bg-green-100">
+            <div class="flex">
+                <div class="flex-1 my-2 mx-2 float-left px-2 py-1"><a class="hover:bg-green-300 rounded-xl px-2 py-1" href="index.html">歡迎到留言板</a></div>
+                <button onclick="turnon()" class="float-right my-2 mr-2 px-2 py-1 hover:bg-green-300 rounded-xl"><i class='far fa-caret-square-down' style='font-size:24px'></i></button>
+            </div>
+            <div id="navbar">
+                <ul>
+                    <li class="mb-2 mx-3 px-1"><a href="login.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">帳號</a></li>
+                    <li class="my-2 mx-3 px-1"><a href="intro.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">網站介紹</a></li>
+                    <li class="my-2 mx-3 px-1" id="log2"><a href="javascript:logout()" class="hover:bg-green-300 px-2 py-1 rounded-xl">登出</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="flex justify-center mt-60" id="login">
+            <div class="p-1 bg-indigo-400 h-32 w-4/12 text-2xl text-white text-center font-extrabold flex items-center justify-center rounded-l-xl">享受留言的快樂。</div>
+            <div class="p-1 bg-indigo-600 h-32 w-2/12 text-2xl text-white text-center font-extrabold flex items-center justify-center rounded-r-full"><a href="msg.html">開始使用</a></div>
+        </div>
+        <div class="flex justify-center mt-60" id="notlogin">
+            <div class="p-1 bg-indigo-400 h-32 w-4/12 text-2xl text-white font-extrabold flex items-center justify-center rounded-l-xl">享受留言的快樂。</div>
+            <div class="p-1 bg-indigo-600 h-32 w-2/12 text-2xl text-white font-extrabold flex items-center justify-center rounded-r-full"><a href="login.html">登入</a></div>
+        </div>
+    </body>
+</html>

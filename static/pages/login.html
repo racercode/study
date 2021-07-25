@@ -1,44 +1,54 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>...</title>
+    <title>留言板</title>
     <script src="/js/socket.io.min.js"></script>
     <script src="/js/api.js"></script>
     <link href="/css/login.css" rel="stylesheet" />
   </head>
-  <body>
+  <body background="/image/back.jfif">
     <script src="/js/login.js"></script>
-    <nav>
-      <ul>
-        <li><a>Home</a></li>
-        <li><a>help</a></li>
-        <li>
-          <a href="javascript:HC.user.logout().then(()=>alert('logout'))"
-            >logout</a
-          >
-        </li>
-      </ul>
-      <hr>
-    </nav>
-    <div>
-    <h3>login</h3>
+    <div id="all">
+    <div id="dis-big">
+      <ul class="my-10 mx-32 border-b-2 rounded-3xl flex bg-green-100">
+          <li class="flex-1 float-left my-3 mx-5 "><a class="hover:bg-green-300 px-2 py-1 rounded-xl" href="index.html">歡迎到留言板</a></li>
+          <li class="float-right my-3 mx-5 "><a href="login.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">帳號</a></li>
+          <li class="float-right my-3 mx-5 "><a href="intro.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">網站介紹</a></li>
+        </ul>
+  </div>
+  <div id="dis-small" class="my-10 mx-10 border-b-2 rounded-md bg-green-100">
+      <div class="flex">
+          <div class="flex-1 my-2 mx-2 float-left px-2 py-1"><a class="hover:bg-green-300 rounded-xl px-2 py-1" href="index.html">歡迎到留言板</a></div>
+          <button onclick="turnon()" class="float-right my-2 mr-2 px-2 py-1 hover:bg-green-300 rounded-xl"><i class='far fa-caret-square-down' style='font-size:24px'></i></button>
+      </div>
+      <div id="navbar">
+          <ul>
+              <li class="mb-2 mx-3 px-1"><a href="login.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">帳號</a></li>
+              <li class="my-2 mx-3 px-1"><a href="intro.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">網站介紹</a></li>
+          </ul>
+      </div>
+  </div>
+    <div class="bg-blue-200 mx-10 p-5 justify-center">
     <form onsubmit="return login()" id="center">
       <h4>
-        <table style="border:3px #ebeaea solid;" cellpadding="10" border='1'>
+        <table cellpadding="10" class="rounded-md border-3">
             <tr>
-              <td>Account name</td>
-              <td><input type="text" id="AccountName" /></td>
+              <td>帳號名稱</td>
+              <td><input type="text" id="AccountName" class="focus:outline-none focus:ring focus:border-green-300 w-7/12 pl-2 rounded-md h-8"/></td>
             </tr>
             <tr>
-              <td>Password</td>
-              <td><input type="password" id="Password" /></td>
+              <td>密碼</td>
+              <td><input type="password" id="Password"  class="focus:outline-none focus:ring focus:border-green-300 w-7/12 pl-2 rounded-md h-8"/></td>
             </tr>
           </table>
       </h4>
-      <div><button type="submit">Submit</button></div>
+      <div><button type="submit" class="my-4 ml-2 bg-green-200 p-1">登入</button></div>
     </form>
     <div>
     <div class="fnone side"></div>
+  </div>
   </body>
 </html>

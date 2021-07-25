@@ -1,39 +1,55 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>...</title>
+    <title>留言板</title>
+    <link href="/css/msg.css" rel="stylesheet" />
     <script src="/js/socket.io.min.js"></script>
     <script src="/js/api.js"></script>
-    <link href="/css/msg.css" rel="stylesheet" />
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
   </head>
-  <body>
+  <body background="/image/back.jfif">
     <script src="/js/msg.js"></script>
-    <nav>
-      <ul>
-        <li><a href="javascript:sideT.switch()">SideBar</a></li>
-        <li><a>Home</a></li>
-        <li><a>help</a></li>
-        <li><a href="javascript:HC.user.logout().then(()=>alert('logout'))">logout</a></li>
-      </ul>
-      <hr>
-    </nav>
-    <button type="button" class="fnone cm" onclick="extendMsg()">Load More</button>
-    <div id="content" class="fnone cm"></div>
-
+    <div id="dis-big">
+      <ul class="my-10 mx-32 border-b-2 rounded-3xl flex bg-green-100">
+          <li class="flex-1 float-left my-3 mx-5 "><a class="hover:bg-green-300 px-2 py-1 rounded-xl" href="index.html">歡迎到留言板</a></li>
+          <li class="float-right my-3 mx-5 "><a href="login.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">帳號</a></li>
+          <li class="float-right my-3 mx-5 "><a href="intro.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">網站介紹</a></li>
+          <li class="float-right my-3 mx-5 "><a href="javascript:logout()" class="hover:bg-green-300 px-2 py-1 rounded-xl">登出</a></li>
+        </ul>
+  </div>
+  <div id="dis-small" class="my-10 mx-10 border-b-2 rounded-md bg-green-100 rounded-md">
+      <div class="flex">
+          <div class="flex-1 my-2 mx-2 float-left px-2 py-1"><a class="hover:bg-green-300 rounded-xl px-2 py-1" href="index.html">歡迎到留言板</a></div>
+          <button onclick="turnon()" class="float-right my-2 mr-2 px-2 py-1 hover:bg-green-300 rounded-xl"><i class='far fa-caret-square-down' style='font-size:24px'></i></button>
+      </div>
+      <div id="navbar">
+          <ul>
+              <li class="mb-2 mx-3 px-1"><a href="login.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">帳號</a></li>
+              <li class="my-2 mx-3 px-1"><a href="intro.html" class="hover:bg-green-300 px-2 py-1 rounded-xl">網站介紹</a></li>
+              <li class="my-2 mx-3 px-1"><a href="javascript:logout()" class="hover:bg-green-300 px-2 py-1 rounded-xl">登出</a></li>
+          </ul>
+      </div>
+    </div>
+    <div class="m-10 bg-blue-100 p-2" id="close2">
+    <div id="content" class="ml-2" class="fnone cm"></div>
     <form onsubmit="return _submit();" id="center" class="fnone cm">
       <div>
-        <label>Msg:</label> <input type="text" id="Msg" />
+        <label class="ml-2 mr-2 p-2">輸入訊息</label> <input type="text" id="Msg" class="focus:outline-none focus:ring w-20 focus:border-green-300 pl-2 rounded-md h-8"/>
       </div>
-      <div><button type="submit">Submit</button></div>
+      <button type="submit" class="my-4 ml-3 bg-green-300 p-1 rounded-md">傳送</button>
+      <button type="button" class="my-4 ml-3 bg-green-300 p-1 rounded-md" class="fnone cm" onclick="extendMsg()">更多訊息</button>
     </form>
-
-    <form onsubmit="return ChangeRoom()" id="center" class="cr">
-      <div>
-        <label>Room:</label> <input type="text" id="room" />
-      </div>
-      <div><button type="submit">Submit</button></div>
-    </form>
-    <div class="fonone side" data-side-open="false"><button onclick="sideT.switch()">close</button></div>
-  </body>
+    </div>
+    <div class="mx-10 bg-blue-200 p-2 rounded-md" id="close">
+      <form onsubmit="return ChangeRoom()" id="center" class="cr">
+        <div class="pl-2">
+          <label class="mr-2 mb-2">房間號碼</label> <input type="text" id="room" class="focus:outline-none focus:ring w-20 focus:border-green-300 pl-2 rounded-md h-8"/>
+        </div>
+        <button type="submit" class="my-4 ml-2 bg-green-300 p-1">進入</button>
+      </form>
+    </div>
+    
+    </body>
 </html>
